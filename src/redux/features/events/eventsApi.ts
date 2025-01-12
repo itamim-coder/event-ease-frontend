@@ -18,7 +18,7 @@ export const eventApi = baseApi.injectEndpoints({
         method: "GET",
       }),
 
-      providesTags: ["event"],
+      providesTags: ["event", "booking"],
     }),
   }),
 });

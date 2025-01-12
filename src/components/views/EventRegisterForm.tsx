@@ -17,7 +17,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export function EventRegisterForm({ eventId }) {
-  console.log(eventId);
+//   console.log(eventId);
   const user = useAppSelector(selectCurrentUser); // User details from Redux
   const [ticket, setTickets] = useState(1); // Counter for tickets
 
@@ -37,7 +37,7 @@ export function EventRegisterForm({ eventId }) {
         ticket,
       };
       const res = await eventBooking(bookingData).unwrap();
-      console.log(res);
+    //   console.log(res);
 
       if (res?._id) {
         toast.success("Event Registered Successfully");

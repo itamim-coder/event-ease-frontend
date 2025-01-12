@@ -14,12 +14,20 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import notifyBooking from "@/hooks/notifyBooking";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hooks";
+
+// Assuming you're using React and the user's ID is known
 
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = useAppSelector(selectCurrentUser);
+  const { userId } = user!;
+  notifyBooking(userId!);
   return (
     <SidebarProvider>
       <AppSidebar />

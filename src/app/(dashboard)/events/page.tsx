@@ -8,15 +8,14 @@ import Image from "next/image";
 import React from "react";
 
 const EventsPage = () => {
-
   const { data: eventData, isLoading } = useGetAllEventsQuery(undefined);
-  console.log(eventData);
+  // console.log(eventData);
   return (
     <div className="min-h-screen flex-1 rounded-xl bg-muted/50 p-4 md:min-h-min">
       <div className="flex justify-between mb-6">
         {" "}
         <h1 className="text-xl font-bold"></h1>
-            <AddEventForm />
+        <AddEventForm />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {eventData?.map((event) => (
@@ -86,10 +85,13 @@ const EventsPage = () => {
               <p className="text-gray-700 text-sm mt-4">
                 Host : {event?.createdBy?.name}
               </p>
+              <p className="text-gray-700 text-sm mt-4">
+                Available Ticket : {event?.maxAttendees}
+              </p>
 
               {/* Button */}
 
-              <EventRegisterForm eventId={event._id}/>
+              <EventRegisterForm eventId={event._id} />
             </div>
           </div>
         ))}
