@@ -1,15 +1,18 @@
 "use client";
+import Loading from "@/app/loading";
 import AddEventForm from "@/components/views/AddEventForm";
-import { EventRegisterForm } from "@/components/views/EventRegisterForm";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import EventRegisterForm from "@/components/views/EventRegisterForm";
+
 import { useGetAllEventsQuery } from "@/redux/features/events/eventsApi";
-import { useAppSelector } from "@/redux/hooks";
+
 import Image from "next/image";
 import React from "react";
 
 const EventsPage = () => {
   const { data: eventData, isLoading } = useGetAllEventsQuery(undefined);
-  // console.log(eventData);
+  if (isLoading) {
+    <Loading />;
+  }
   return (
     <div className="min-h-screen flex-1 rounded-xl bg-muted/50 p-4 md:min-h-min">
       <div className="flex justify-between mb-6">
@@ -18,7 +21,7 @@ const EventsPage = () => {
         <AddEventForm />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {eventData?.map((event) => (
+        {eventData?.map((event: any) => (
           <div
             key={event.id}
             className="max-w-sm mx-auto rounded-lg shadow-lg overflow-hidden bg-white transition-transform hover:scale-105"
@@ -91,7 +94,7 @@ const EventsPage = () => {
 
               {/* Button */}
 
-              <EventRegisterForm eventId={event._id} />
+              <EventRegisterForm params={event?._id} />
             </div>
           </div>
         ))}

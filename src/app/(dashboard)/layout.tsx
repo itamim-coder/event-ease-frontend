@@ -14,9 +14,17 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/sonner";
+import Notification from "@/components/views/Notification";
 import notifyBooking from "@/hooks/notifyBooking";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
-import { useAppSelector } from "@/redux/hooks";
+import {
+  selectCurrentUser,
+  useCurrentToken,
+} from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { verifyToken } from "@/utils/verifyToken";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 // Assuming you're using React and the user's ID is known
 
@@ -25,9 +33,28 @@ export default function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = useAppSelector(selectCurrentUser);
-  const { userId } = user!;
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const token = useAppSelector(useCurrentToken);
+  const dispatch = useAppDispatch();
+  let user: any;
+  console.log(token);
+
+  user = useAppSelector(selectCurrentUser);
+  useEffect(() => {
+    setIsLoading(true);
+
+    if (!user) {
+      // removeUserInfo(authKey);
+      return router.push("/login");
+    }
+    setIsLoading(false);
+  }, [router, isLoading]);
+
+  const userId = user?.userId;
+
   notifyBooking(userId!);
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -36,23 +63,11 @@ export default function DashboardLayout({
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Building Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
           </div>
         </header>
         {children}
       </SidebarInset>
+      <Toaster position="top-right" richColors />
     </SidebarProvider>
   );
 }

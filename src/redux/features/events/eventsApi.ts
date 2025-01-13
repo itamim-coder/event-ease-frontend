@@ -20,7 +20,45 @@ export const eventApi = baseApi.injectEndpoints({
 
       providesTags: ["event", "booking"],
     }),
+    getUserCreatedEvent: build.query({
+      query: () => ({
+        url: `${EVENT_URL}/user-event`,
+        method: "GET",
+      }),
+
+      providesTags: ["event", "user"],
+    }),
+    deleteEvent: build.mutation({
+      query: (id) => ({
+        url: `${EVENT_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["event"],
+    }),
+
+    eventUpdate: build.mutation({
+      query: ({ id, data }) => {
+        console.log("Final data being sent to the backend:", { id, data }); // Add final log
+        console.log("Sending the PUT request", {
+          url: `${EVENT_URL}/${id}`,
+          method: "PUT",
+          body: data,
+        });
+        return {
+          url: `${EVENT_URL}/${id}`,
+          method: "PUT",
+          body: data, // Ensure data is an actual object with fields, not empty
+        };
+      },
+      invalidatesTags: ["event"],
+    }),
   }),
 });
 
-export const { useCreateEventMutation, useGetAllEventsQuery } = eventApi;
+export const {
+  useCreateEventMutation,
+  useGetAllEventsQuery,
+  useGetUserCreatedEventQuery,
+  useDeleteEventMutation,
+  useEventUpdateMutation,
+} = eventApi;

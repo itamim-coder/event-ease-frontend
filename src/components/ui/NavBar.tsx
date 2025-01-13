@@ -65,7 +65,11 @@ function NavBar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <div className="flex-shrink-0">
+              <Link href={"/"} className="cursor">
+                {" "}
                 <p>Event Ease</p>
+              </Link>
+
               {/* <img
                 alt="Your Company"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
@@ -90,7 +94,7 @@ function NavBar() {
                       <DropdownMenuLabel>My Account</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuGroup>
-                        <Link href={`${user?.role}`}>
+                        <Link href={`/dashboard`}>
                           <DropdownMenuItem className="cursor-pointer">
                             <User className="mr-2 h-4 w-4" />
                             <span>Profile</span>
@@ -113,12 +117,6 @@ function NavBar() {
                 </>
               ) : (
                 <>
-                  <Button
-                    asChild
-                    className="px-4 py-2 rounded-md border border-neutral-600 text-black bg-white hover:bg-gray-100 transition duration-200"
-                  >
-                    <Link href="/login">Login</Link>
-                  </Button>
                   <Button
                     asChild
                     className="px-4 py-2 rounded-md border border-neutral-600 text-black bg-white hover:bg-gray-100 transition duration-200"
@@ -181,7 +179,7 @@ function NavBar() {
                       <DropdownMenuItem className="cursor-pointer">
                         <User className="mr-2 h-4 w-4" />
                         <span>
-                          <Link href={"/user"}>Profile</Link>
+                          <Link href={"/dashboard"}>Profile</Link>
                         </span>
                         <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                       </DropdownMenuItem>
