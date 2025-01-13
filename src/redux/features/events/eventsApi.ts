@@ -37,17 +37,16 @@ export const eventApi = baseApi.injectEndpoints({
     }),
 
     eventUpdate: build.mutation({
-      query: ({ id, data }) => {
-        console.log("Final data being sent to the backend:", { id, data }); // Add final log
-        console.log("Sending the PUT request", {
-          url: `${EVENT_URL}/${id}`,
-          method: "PUT",
-          body: data,
-        });
+      query: ({ id, updatedData }) => {
+        // Log the received parameters
+        console.log("ID:", id);
+        console.log("Updated Data:", updatedData);
+    
+
         return {
           url: `${EVENT_URL}/${id}`,
-          method: "PUT",
-          body: data, // Ensure data is an actual object with fields, not empty
+          method: "PATCH",
+          data: updatedData,
         };
       },
       invalidatesTags: ["event"],

@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/features/auth/authSlice";
 import { toast } from "sonner";
+import { useEventUpdateMutation } from "@/redux/features/events/eventsApi";
 
 const UpdateEventForm = ({ eventData }: any) => {
   const router = useRouter();
@@ -30,34 +31,50 @@ const UpdateEventForm = ({ eventData }: any) => {
     },
   });
   const token = useAppSelector(useCurrentToken);
-  //   const [updateEventData] = useEventUpdateMutation();
+  const [updateEventData] = useEventUpdateMutation();
+  //   const onSubmit = async (data: any) => {
+  //     try {
+  //       const response = await fetch(`${getBaseUrl()}/event/${_id}`, {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         body: JSON.stringify(data),
+  //       });
+  //       const result = await response.json();
+  //       console.log("Backend response:", result);
+
+  //       if (result?.statusCode === 200) {
+  //         toast.success("Event updated successfully");
+  //         console.log("Redirecting to dashboard...");
+  //         router.push("/dashboard");
+  //         router.refresh(); // Ensure the new data loads
+  //       } else {
+  //         toast.error(result.message || "Failed to update Event");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error updating Event:", error);
+  //       toast.error("An error occurred while updating the Event.");
+  //     }
+  //   };
   const onSubmit = async (data: any) => {
+    // toast.loading("Updating....");
+console.log(data, "update")
     try {
-      const response = await fetch(`${getBaseUrl()}/event/${_id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
+      const res = await updateEventData({
+        id: _id,
+        updatedData: data,
       });
-      const result = await response.json();
-      console.log("Backend response:", result);
-  
-      if (result?.statusCode === 200) {
-        toast.success("Event updated successfully");
-        console.log("Redirecting to dashboard...");
-        router.push("/dashboard");
-        router.refresh(); // Ensure the new data loads
-      } else {
-        toast.error(result.message || "Failed to update Event");
+      console.log(res);
+      if (res) {
+        toast.success("Updated Successfully");
       }
-    } catch (error) {
-      console.error("Error updating Event:", error);
-      toast.error("An error occurred while updating the Event.");
+    } catch (err) {
+      toast.error("failed");
+      console.log(err);
     }
   };
-  
   return (
     <>
       <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>

@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-
+import { baseApi } from "./api/baseApi";
+import { reducer } from "./rootReducer";
 import {
   persistStore,
   FLUSH,
@@ -9,8 +10,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import { reducer } from "./rootReducer";
-import { baseApi } from "./api/baseApi";
+
 export const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) =>
