@@ -20,7 +20,7 @@ const Notification = () => {
   console.log(notifications, "compo");
 
   return (
-    <Popover>
+    <Popover> 
       <PopoverTrigger asChild>
         <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
           <Bell className="h-4 w-4" />

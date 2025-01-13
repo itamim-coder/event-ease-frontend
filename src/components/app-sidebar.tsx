@@ -57,10 +57,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="flex justify-between">
-        <Link href={"/"} className="cursor">
-          <p className="font-semibold text-center">Event Ease Dashboard</p>
-        </Link>
-        <Notification />
+        <div className=" flex items-center">
+          <Link href={"/"} className="cursor">
+            <p className="font-semibold text-center">Event Ease</p>
+          </Link>
+          <Notification />
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

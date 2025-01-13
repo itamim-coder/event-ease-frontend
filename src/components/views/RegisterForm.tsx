@@ -37,9 +37,9 @@ const RegisterForm = () => {
       const res = await signUP(data).unwrap();
 
       console.log(res);
-      if (res.id) {
+      if (res?._id) {
         toast.success("Register Successful login now!!!");
-        router.push(`/`);
+        router.push(`/login`);
       }
     } catch (error) {
       console.log(error);

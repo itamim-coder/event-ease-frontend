@@ -11,7 +11,7 @@ const persistConfig = {
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 export const reducer = {
+  [baseApi.reducerPath]: baseApi.reducer,
   auth: persistedAuthReducer,
   notification: notificationReducer,
-  [baseApi.reducerPath]: baseApi.reducer,
 };
